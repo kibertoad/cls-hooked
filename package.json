@@ -35,7 +35,7 @@
     "Jeff Lewis <jlewis@streetconnect.com>"
   ],
   "license": "BSD-2-Clause",
-  "engineStrict": false,
+  "engineStrict": true,
   "engines": {
     "node": ">=8.6.0"
   },
