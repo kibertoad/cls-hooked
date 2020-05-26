@@ -32,7 +32,7 @@
   "license": "BSD-2-Clause",
   "engineStrict": false,
   "engines": {
-    "node": ">=8.2.1"
+    "node": ">=8.6.0"
   },
   "dependencies": {
     "async-hook-jl": "^1.7.6",
