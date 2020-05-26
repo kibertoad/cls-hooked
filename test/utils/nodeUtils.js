@@ -1,4 +1,4 @@
-const NODE_MAJOR_VERSION = process.versions.node.split('.')[0];
+const NODE_MAJOR_VERSION = process.versions.node.split('.')[0]
 
 function isNode8Plus() {
   return NODE_MAJOR_VERSION >= 8
@@ -20,5 +20,5 @@ module.exports = {
   isNode8Plus,
   isNode10Plus,
   isNode12Plus,
-  isNode14Plus
+  isNode14Plus,
 }

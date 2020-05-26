@@ -1,42 +1,41 @@
-'use strict';
+'use strict'
 
 // stdlib
-const tap = require('tap');
-const test = tap.test;
-const EventEmitter = require('events').EventEmitter;
+const tap = require('tap')
+const test = tap.test
+const EventEmitter = require('events').EventEmitter
 
 // module under test
-const context = require('../../index.js');
+const context = require('../../index.js')
 
 // multiple contexts in use
-const tracer = context.createNamespace('tracer');
+const tracer = context.createNamespace('tracer')
 
 function Trace(harvester) {
-  this.harvester = harvester;
+  this.harvester = harvester
 }
 
 Trace.prototype.runHandler = function (handler) {
-  let trace = tracer.run(handler);
-  this.harvester.emit('finished', trace.transaction);
-};
+  let trace = tracer.run(handler)
+  this.harvester.emit('finished', trace.transaction)
+}
 
+test('simple tracer built on contexts', function (t) {
+  t.plan(6)
 
-test("simple tracer built on contexts", function (t) {
-  t.plan(6);
-
-  let harvester = new EventEmitter();
-  let trace = new Trace(harvester);
+  let harvester = new EventEmitter()
+  let trace = new Trace(harvester)
 
   harvester.on('finished', function (transaction) {
-    t.ok(transaction, "transaction should have been passed in");
-    t.equal(transaction.status, 'ok', "transaction should have finished OK");
-    t.equal(Object.keys(process.namespaces).length, 1, "Should only have one namespace.");
-  });
+    t.ok(transaction, 'transaction should have been passed in')
+    t.equal(transaction.status, 'ok', 'transaction should have finished OK')
+    t.equal(Object.keys(process.namespaces).length, 1, 'Should only have one namespace.')
+  })
 
   trace.runHandler(function inScope() {
-    t.ok(tracer.active, "tracer should have an active context");
-    tracer.set('transaction', {status : 'ok'});
-    t.ok(tracer.get('transaction'), "can retrieve newly-set value");
-    t.equal(tracer.get('transaction').status, 'ok', "value should be correct");
-  });
-});
+    t.ok(tracer.active, 'tracer should have an active context')
+    tracer.set('transaction', { status: 'ok' })
+    t.ok(tracer.get('transaction'), 'can retrieve newly-set value')
+    t.equal(tracer.get('transaction').status, 'ok', 'value should be correct')
+  })
+})
