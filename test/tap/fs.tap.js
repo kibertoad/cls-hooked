@@ -170,7 +170,7 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.chown", function (t) {
+    t.test("fs.chown", {skip: true}, function (t) {
       createFile(t);
 
       mapIds('daemon', 'daemon', function (error, uid, gid) {
@@ -195,7 +195,7 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.fchown", function (t) {
+    t.test("fs.fchown", {skip: true}, function (t) {
       createFile(t);
 
       mapIds('daemon', 'daemon', function (error, uid, gid) {
