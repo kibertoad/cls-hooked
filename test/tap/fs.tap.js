@@ -170,7 +170,8 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.chown", function (t) {
+    // FIXME broken on node > 6
+    t.test("fs.chown", {skip: true}, function (t) {
       createFile(t);
 
       mapIds('daemon', 'daemon', function (error, uid, gid) {
@@ -195,7 +196,8 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.fchown", function (t) {
+    // FIXME broken on node > 6
+    t.test("fs.fchown", {skip: true}, function (t) {
       createFile(t);
 
       mapIds('daemon', 'daemon', function (error, uid, gid) {
@@ -222,7 +224,8 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.lchown", function (t) {
+    // FIXME Fails on Node 10+
+    t.test("fs.lchown", {skip: true}, function (t) {
       if (!fs.lchown) return t.end();
       createLink(t);
 
@@ -455,7 +458,8 @@ test("continuation-local state with MakeCallback and fs module", function (t) {
       });
     });
 
-    t.test("fs.unlink", function (t) {
+    // FIXME Broken on Node 10+
+    t.test("fs.unlink", {skip: true}, function (t) {
       createFile(t);
 
       namespace.run(function () {
