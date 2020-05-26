@@ -4,22 +4,9 @@
 
 # Continuation-Local Storage ( Hooked )
 
-### This is a fork of [CLS](https://github.com/othiym23/node-continuation-local-storage) using [AsyncWrap](https://github.com/nodejs/node-eps/blob/async-wrap-ep/XXX-asyncwrap-api.md) OR [async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md) instead of [async-listener](https://github.com/othiym23/async-listener).
+### This is a fork of [CLS](https://github.com/Jeff-Lewis/cls-hooked) that aims to create a somewhat more maintained version and apply improvement, submitted by community.
 
-### When running Nodejs version < 8, this module uses [AsyncWrap](https://github.com/nodejs/node-eps/blob/async-wrap-ep/XXX-asyncwrap-api.md) which is an unsupported Nodejs API, so please consider the risk before using it.
-
-### When running Nodejs version >= 8.2.1, this module uses the newer [async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md) API which is considered `Experimental` by Nodejs.
-
-### Thanks to [@trevnorris](https://github.com/trevnorris) for [AsyncWrap](https://github.com/nodejs/node-eps/blob/async-wrap-ep/XXX-asyncwrap-api.md), [async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md) and all the async work in Node and [@AndreasMadsen](https://github.com/AndreasMadsen) for [async-hook](https://github.com/AndreasMadsen/async-hook)
-
-### A little history of "AsyncWrap/async_hooks" and its incarnations
-
-1. First implementation was called **[AsyncListener](https://github.com/nodejs/node-v0.x-archive/pull/6011)** in node v0.11 but was [removed from core](https://github.com/nodejs/node-v0.x-archive/pull/8110) prior to Nodejs v0.12
-2. Second implementation called **[AsyncWrap, async-wrap or async_wrap](https://github.com/nodejs/node-eps/blob/async-wrap-ep/XXX-asyncwrap-api.md)** was included to Nodejs v0.12.
-    - `AsyncWrap` is unofficial and undocumented but is currently in Nodejs versions 6 & 7
-    - `cls-hooked` uses `AsyncWrap` when run in Node < 8.
-3. Third implementation and [offically Node-eps accepted](https://github.com/nodejs/node-eps/blob/master/006-asynchooks-api.md) **AsyncHooks ([async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md)) API** was included in Nodejs v8. :)
-**The latest version of `cls-hooked` uses [async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md) API when run in Node >= 8.2.1**
+### This module requires Node.js version >= 8.6.0 and uses [async_hooks](https://github.com/nodejs/node/blob/master/doc/api/async_hooks.md) API which is considered `Experimental` by Nodejs.
 
 ---
 Continuation-local storage works like thread-local storage in threaded
@@ -35,10 +22,10 @@ before calling a function passed in by a user to continue execution:
 ```javascript
 // setup.js
 
-var createNamespace = require('cls-hooked').createNamespace;
-var session = createNamespace('my session');
+const createNamespace = require('@kibertoad/cls-hooked').createNamespace;
+const session = createNamespace('my session');
 
-var db = require('./lib/db.js');
+const db = require('./lib/db.js');
 
 function start(options, next) {
   db.fetchUserById(options.id, function (error, user) {
@@ -58,13 +45,13 @@ the value you set earlier:
 ```javascript
 // send_response.js
 
-var getNamespace = require('cls-hooked').getNamespace;
-var session = getNamespace('my session');
+const getNamespace = require('@kibertoad/cls-hooked').getNamespace;
+const session = getNamespace('my session');
 
-var render = require('./lib/render.js')
+const render = require('./lib/render.js')
 
 function finish(response) {
-  var user = session.get('user');
+  const user = session.get('user');
   render({user: user}).pipe(response);
 }
 ```
@@ -94,9 +81,9 @@ overwriting the parent's.
 A simple, annotated example of how this nesting behaves:
 
 ```javascript
-var createNamespace = require('cls-hooked').createNamespace;
+const createNamespace = require('@kibertoad/cls-hooked').createNamespace;
 
-var writer = createNamespace('writer');
+const writer = createNamespace('writer');
 writer.run(function () {
   writer.set('value', 0);
 
@@ -279,7 +266,7 @@ function bindLater(callback) {
 }
 
 setInterval(function () {
-  var bound = bindLater(doSomething);
+  const bound = bindLater(doSomething);
   bound('test');
 }, 100);
 ```
@@ -290,7 +277,7 @@ A context is a plain object created using the enclosing context as its prototype
 
 # copyright & license
 
-See [LICENSE](https://github.com/jeff-lewis/cls-hooked/blob/master/LICENSE)
+See [LICENSE](https://github.com/kibertoad/cls-hooked/blob/master/LICENSE)
 for the details of the BSD 2-clause "simplified" license used by
 `continuation-local-storage`. This package was developed in 2012-2013 (and is
 maintained now) by Forrest L Norvell, [@othiym23](https://github.com/othiym23),

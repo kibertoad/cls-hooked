@@ -5,8 +5,7 @@
   "main": "index.js",
   "files": [
     "index.js",
-    "context.js",
-    "context-legacy.js"
+    "context.js"
   ],
   "scripts": {
     "test:ci": "npm run test:mocha && npm run test:tap",
@@ -21,10 +20,14 @@
   "keywords": [
     "threading",
     "shared",
-    "context"
+    "context",
+    "cls",
+    "threadlocal",
+    "localstorage"
   ],
   "author": "Forrest L Norvell <ogd@aoaioxxysz.net>",
   "contributors": [
+    "Igor Savin <kibertoad@gmail.com>",
     "Tim Caswell <tim@creationix.com>",
     "Forrest L Norvell <ogd@aoaioxxysz.net>",
     "Jeff Lewis <jlewis@streetconnect.com>"

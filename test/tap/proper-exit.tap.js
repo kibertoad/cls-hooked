@@ -3,7 +3,9 @@ var tap = require('tap');
 var test = tap.test;
 var util = require('util');
 
+// FIXME This is broken on Node > 6
 test('proper exit on uncaughtException', {skip: true}, function(t) {
+
   process.on('uncaughtException', function(err) {
     if (err.message === 'oops') {
       //console.log("ok got expected message: %s", err.message);

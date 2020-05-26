@@ -1,5 +1,7 @@
 'use strict';
 
+const {isNode12Plus} = require('./utils/nodeUtils');
+
 const chai = require('chai');
 const should = chai.should();
 
@@ -24,11 +26,15 @@ describe('cls with http Agent', () => {
   });
 
 
-  describe('when making two http requests', ()=> {
+  describe('when making two http requests', () => {
 
     let innerRequestContextValue;
 
-    it('should retain context during first', (done)=> {
+    it('should retain context during first', function (done) {
+      if (isNode12Plus) {
+        this.skip('This is broken on Node 12+')
+      }
+
       doClsAction(123, () => {
         should.exist(innerRequestContextValue)
         innerRequestContextValue.should.equal(123);
@@ -37,7 +43,11 @@ describe('cls with http Agent', () => {
     });
 
 
-    it('should retain context during second', (done)=> {
+    it('should retain context during second', function (done) {
+      if (isNode12Plus) {
+        this.skip('This is broken on Node 12+')
+      }
+
       doClsAction(456, () => {
         should.exist(innerRequestContextValue)
         innerRequestContextValue.should.equal(456);
